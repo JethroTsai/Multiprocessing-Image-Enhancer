@@ -7,7 +7,7 @@ import multiprocessing
 import time
 
 class image_enhancer(multiprocessing.Process):
-    def __init__(self):
+    def __init__(self, edited_loc, new_bright, new_sharp, new_contrast, ctr, queue, remItems):
         multiprocessing.Process.__init__(self)
 
 class main():
@@ -16,17 +16,13 @@ class main():
     # Enhancing time in minutes
     duration = int(input("input time (in minutes): "))
     # Brightness Enhancement Factor
-    brightness= float(input("input brightness: "))
+    new_bri= float(input("input brightness: "))
     # Sharpness Enhancement Factor
-    sharpness= float (input("input sharpness: "))
+    new_sha= float (input("input sharpness: "))
     # Contrast Enhancement Factor
-    contrast = float(input("input contrast: "))
+    new_con = float(input("input contrast: "))
     # Optional process count
     process_count = int(input("input process count: "))
-    
-    g_processes = []
-    e_processes = []
-    counter = 0;
     
 if __name__ == "__main__":
     main() 
