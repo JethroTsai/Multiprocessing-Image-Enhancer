@@ -1,47 +1,32 @@
+from PIL import Image
+from PIL import ImageEnhance
+import os
+from os import listdir
+import matplotlib.pyplot as plt
 import multiprocessing
-from queue import Empty
 import time
 
-def initialize_images():
-    images = []
+class image_enhancer(multiprocessing.Process):
+    def __init__(self):
+        multiprocessing.Process.__init__(self)
 
-    for i in range(100):
-        images.append(f"image-{i}.jpg")
-
-    return images
-
-def enqueue_images(images, queue):
-    for img in images:
-        queue.put(img)
-        print(f"{multiprocessing.current_process().name} - Enqueued image: {img}")
-
-def adjust_contrast(queue):
-    while not queue.empty():
-        time.sleep(0.05)
-        try:
-            print(f"{multiprocessing.current_process().name} - Adjusted Contrast for image: {queue.get(timeout=0.05)}")
-        except Empty:
-            print("Done!")
-
-def run():
-    images = initialize_images()
-    queue = multiprocessing.Queue()
-
-    p1 = multiprocessing.Process(target=enqueue_images, args=(images, queue))
-    p2 = multiprocessing.Process(target=adjust_contrast, args=(queue,))
-    p3 = multiprocessing.Process(target=adjust_contrast, args=(queue,))
-
-    p1.start()
-    p2.start()
-    p3.start()
-
-    p1.join()
-    p2.join()
-    p3.join()
-
+class main():
+    photos_loc = input("Location of images: ")
+    edited_loc = input("Location of enhanced images: ")
+    # Enhancing time in minutes
+    duration = int(input("input time (in minutes): "))
+    # Brightness Enhancement Factor
+    brightness= float(input("input brightness: "))
+    # Sharpness Enhancement Factor
+    sharpness= float (input("input sharpness: "))
+    # Contrast Enhancement Factor
+    contrast = float(input("input contrast: "))
+    # Optional process count
+    process_count = int(input("input process count: "))
+    
+    g_processes = []
+    e_processes = []
+    counter = 0;
+    
 if __name__ == "__main__":
-    start_time = time.perf_counter()
-    run()
-    finish_time = time.perf_counter()
-
-    print("=== Time elapsed", round(finish_time - start_time), "seconds")
+    main() 
