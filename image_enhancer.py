@@ -13,6 +13,12 @@ class image_enhancer(multiprocessing.Process):
         self.sharpness = new_sharp
         self.contrast = new_contrast
         
+    def enhance(self):
+        # get image and enhance
+        image = ImageEnhance.Brightness(image).enhance(self.brightness)
+        image = ImageEnhance.Sharpness(image).enhance(self.sharpness)
+        image = ImageEnhance.Contrast(image).enhance(self.contrast)
+        
 class ImageGetter(multiprocessing.Process):
     def __init__(self):
         multiprocessing.Process.__init__(self)
@@ -34,13 +40,26 @@ def main():
     process_count = int(input("input process count: "))
     
     with multiprocessing.Manager() as manager:
+        time_start = time.time()
         image_queue = multiprocessing.Queue()
         image_sem = multiprocessing.Semaphore(process_count)
+        file_sem = multiprocessing.Semaphore(process_count)
+        timer = time.time() + (duration * 60)
         
         flist = (listdir(photos_loc))
         file_list = manager.list(flist)
         
         print(flist)
+        while (time.time() < timer):
+            while(len(file_list)):
+                file_sem.acquire()
+                # get files
+                file_sem.release()
+                
+                
+        total_time = time.time() - time_start
+        
+        # write in text file
     
 if __name__ == "__main__":
     main() 
