@@ -21,9 +21,9 @@ class ImageEnhancer:
         imgage.show()
 
 def image_enhancer_process(edited_loc, brightness, sharpness, contrast, image_data, counter, rem_items, stop_event):
-    enhancer = ImageEnhancer(edited_loc = edited_loc, brightness=brightness, sharpness=sharpness, contrast=contrast)
+    enhancer = ImageEnhancer(edited_loc = edited_loc, brightness = brightness, sharpness = sharpness, contrast = contrast)
     for img_data in image_data:
-        if stop_event.is_set():
+        if stop_event.is_set(): # If time exceeds inputted time
             break  # Exit the loop if the stop event is set
         enhancer.enhance_image(img_data)
         # locks
@@ -53,11 +53,15 @@ def main():
     print(image_files)
 
     with multiprocessing.Manager() as manager:
-        image_data = [(Image.open(os.path.join(photos_loc, fname)), fname) for fname in image_files]
+        image_data = []
+        for fname in image_files:
+            image_object = Image.open(os.path.join(photos_loc, fname)) # Open image using full path of photos_loc and file name
+            image_data.append((image_object, fname))
+            
         counter = multiprocessing.Value('i', 0)
         rem_items = multiprocessing.Value('i', len(image_files))
         chunk_size = (len(image_data) // process_count) + 1 # split for each process
-        stop_event = multiprocessing.Event()
+        stop_event = multiprocessing.Event() # Stop event for when time exceeds
         
         processes = []
         for i in range(process_count):
