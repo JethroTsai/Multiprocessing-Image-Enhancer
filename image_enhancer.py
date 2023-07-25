@@ -13,12 +13,12 @@ class ImageEnhancer:
         self.contrast = contrast
 
     def enhance_image(self, img_data):
-        imgage, imgage_name = img_data
-        imgage = ImageEnhance.Brightness(imgage).enhance(self.brightness)
-        imgage = ImageEnhance.Sharpness(imgage).enhance(self.sharpness)
-        imgage = ImageEnhance.Contrast(imgage).enhance(self.contrast)
-        imgage.save(os.path.join(self.edited_loc, imgage_name), "JPEG")
-        imgage.show()
+        image, image_name = img_data
+        image = ImageEnhance.Brightness(image).enhance(self.brightness)
+        image = ImageEnhance.Sharpness(image).enhance(self.sharpness)
+        image = ImageEnhance.Contrast(image).enhance(self.contrast)
+        image.save(os.path.join(self.edited_loc, image_name), "JPEG")
+        image.show()
 
 def image_enhancer_process(edited_loc, brightness, sharpness, contrast, image_data, counter, rem_items, stop_event):
     enhancer = ImageEnhancer(edited_loc = edited_loc, brightness = brightness, sharpness = sharpness, contrast = contrast)
