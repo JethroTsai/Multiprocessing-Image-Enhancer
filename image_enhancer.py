@@ -18,7 +18,7 @@ class ImageEnhancer:
         image = ImageEnhance.Sharpness(image).enhance(self.sharpness)
         image = ImageEnhance.Contrast(image).enhance(self.contrast)
         image.save(os.path.join(self.edited_loc, image_name), "JPEG")
-        image.show()
+        #image.show()
 
 def image_enhancer_process(edited_loc, brightness, sharpness, contrast, image_data, counter, rem_items, stop_event):
     enhancer = ImageEnhancer(edited_loc = edited_loc, brightness = brightness, sharpness = sharpness, contrast = contrast)
@@ -50,7 +50,7 @@ def main():
     t_end = t_start + duration * 60  # Convert duration to seconds and add to t_start
     
     image_files = []
-    for fname in listdir(photos_loc):
+    for fname in listdir(photos_loc):  # Some images are from: https://www.robots.ox.ac.uk/~vgg/data/pets/
         # Check if file
         if os.path.isfile(os.path.join(photos_loc, fname)):
             image_files.append(fname)
@@ -61,6 +61,9 @@ def main():
         image_data = []
         for fname in image_files:
             image_object = Image.open(os.path.join(photos_loc, fname)) # Open image using full path of photos_loc and file name
+            if image_object.mode != "RGB":
+                image_object = image_object.convert('RGB')
+
             image_data.append((image_object, fname))
             
         counter = multiprocessing.Value('i', 0)
