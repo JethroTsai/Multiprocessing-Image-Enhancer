@@ -97,10 +97,10 @@ def main():
     t_end = time.time()
     t_total = t_end - t_start
 
-    with open("log_par.txt", "w") as f:
-        f.write("Total Time Taken : {:.4f} \n".format(t_total))
+    with open("log.txt", "w") as f:
+        f.write("Total Time Taken: {:.4f} \n".format(t_total))
         f.write("Number of Images Enhanced: {0} \n".format(counter.value))
-        f.write("Enhanced Images Location : {0}".format(edited_loc))
+        f.write("Enhanced Images Location: {0}".format(edited_loc))
         f.close()
 
 if __name__ == "__main__":
