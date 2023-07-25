@@ -49,7 +49,12 @@ def main():
     t_start = time.time()
     t_end = t_start + duration * 60  # Convert duration to seconds and add to t_start
     
-    image_files = [f for f in listdir(photos_loc) if os.path.isfile(os.path.join(photos_loc, f))] # Append images
+    image_files = []
+    for fname in listdir(photos_loc):
+        # Check if file
+        if os.path.isfile(os.path.join(photos_loc, fname)):
+            image_files.append(fname)
+            
     print(image_files)
 
     with multiprocessing.Manager() as manager:
