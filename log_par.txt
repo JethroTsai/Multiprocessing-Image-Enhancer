@@ -1,0 +1,3 @@
+Total Time Taken : 7.3078 
+Number of Images Enhanced: 4 
+Enhanced Images Location : edited

@@ -36,7 +36,7 @@ def main():
     photos_loc = input("Location of Images: ")
     edited_loc = input("Location of Enhanced Images: ")
     # Enhancing time in units
-    duration = int(input("input time: "))
+    duration = float(input("input time: "))
     # Brightness
     brightness = float(input("input brightness: "))
     # Sharpness
